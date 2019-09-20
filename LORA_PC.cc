@@ -26,7 +26,6 @@ struct socket_connection
     int sockfd, connfd;
     socklen_t len;
     struct sockaddr_in servaddr, cli;
-    //sockaddr_in servaddr, cli;
 
 } ;
 
@@ -100,34 +99,6 @@ void accept_socket(socket_connection* sock){
     printf("server acccepted the client...\n");
 }
 
-void func(int sockfd)
-{
-    char buff[MAX];
-    int n;
-    // infinite loop for chat
-    for (;;) {
-        bzero(buff, MAX);
-        
-        // read the message from client and copy it in buffer
-        read(sockfd, buff, sizeof(buff));
-        // print buffer which contains the client contents
-        printf("From client: %s\t To client : ", buff);
-        bzero(buff, MAX);
-        n = 0;
-        // copy server message in the buffer
-        while ((buff[n++] = getchar()) != '\n')
-        ;
-        
-        // and send that buffer to client
-        write(sockfd, buff, sizeof(buff));
-        
-        // if msg contains "Exit" then server exit and chat ended.
-        if (strncmp("exit", buff, 4) == 0) {
-            printf("Server Exit...\n");
-            break;
-        }
-    }
-}
 
 void func_read(int sockfd1)
 {
@@ -145,13 +116,31 @@ void func_read(int sockfd1)
             printf("Client Exit...\n");
             break;
         }
-
+        
         bzero(buff, MAX);
         n = 0;
     }
 }
-
-
+/*
+void func_write(struct socket_connection* sock)
+{
+    char buff[MAX];
+    int n;
+    for (;;) {
+        bzero(buff, sizeof(buff));
+        printf("Enter the string : ");
+        n = 0;
+        while ((buff[n++] = getchar()) != '\n');
+        write(sock->sockfd, buff, sizeof(buff));
+        
+        if ((strncmp(buff, "exit", 4)) == 0) {
+            printf("Client Exit...\n");
+            break;
+        }
+        bzero(buff, sizeof(buff));
+    }
+}
+*/
 int main(int argc, char **argv)
 {
     struct socket_connection sock_listen;
@@ -169,13 +158,11 @@ int main(int argc, char **argv)
     
     listen_socket(&sock_listen);
     accept_socket(&sock_listen);
+    listen_socket(&sock_send);
+    accept_socket(&sock_send);
 
     
     func_read(sock_listen.connfd);
-    
-    
-    
-    
     
     
     
