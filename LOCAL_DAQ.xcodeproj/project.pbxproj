@@ -8,6 +8,12 @@
 
 /* Begin PBXFileReference section */
 		41ACAD3F2334D54A00B8AA3B /* LORA_PC.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LORA_PC.cc; sourceTree = "<group>"; };
+		41ACAD4023350E2600B8AA3B /* input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
+		41ACAD4123350E2B00B8AA3B /* socket_functions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = socket_functions.h; sourceTree = "<group>"; };
+		41ACAD4223350E2B00B8AA3B /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		41ACAD4323350FC400B8AA3B /* socket_functions.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_functions.cc; sourceTree = "<group>"; };
+		41ACAD442337F80C00B8AA3B /* extra.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = extra.h; sourceTree = "<group>"; };
+		41ACAD452337F80C00B8AA3B /* extra.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = extra.cc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -15,6 +21,12 @@
 			isa = PBXGroup;
 			children = (
 				41ACAD3F2334D54A00B8AA3B /* LORA_PC.cc */,
+				41ACAD452337F80C00B8AA3B /* extra.cc */,
+				41ACAD442337F80C00B8AA3B /* extra.h */,
+				41ACAD4223350E2B00B8AA3B /* Makefile */,
+				41ACAD4123350E2B00B8AA3B /* socket_functions.h */,
+				41ACAD4323350FC400B8AA3B /* socket_functions.cc */,
+				41ACAD4023350E2600B8AA3B /* input.txt */,
 			);
 			sourceTree = "<group>";
 		};
