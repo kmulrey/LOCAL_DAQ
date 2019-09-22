@@ -1,0 +1,16 @@
+//-------------------------------------------------Control settings for LASA(6-10)---------------------------------------------------------------------------------------------------------------------------------------------------
+//Keyword   Det(11) Det(12) Det(13) Det(14) Det(15) Det(16) Det(17) Det(18) Det(19) Det(20) Det(21) Det(22) Det(23) Det(24) Det(25) Det(26) Det(27) Det(28) Det(29) Det(30) Keyword Defn
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SYS_NAME    lasa6   lasa6  lasa6    lasa6   lasa7   lasa7   lasa7   lasa7        lasa8  lasa8   lasa8   lasa8   lasa9   lasa9   lasa9   lasa9   lasa10  lasa10  lasa10  lasa10  Name of the PC connected
+UNIT_SERIAL_NO  72  72  72  72  73  73  73  73  74  74  74  74  75  75  75  75  76  76  76  76  Hisparc unit serial no.
+PORT_NO_READ 8002    8002    8002    8002    8004    8004    8004    8004    8006    8006    8006    8006    8008    8008    8008    8008    8010    8010    8010    8010   Port no. on the server ("dwingeloo") for reading
+PORT_NO_WRITE 8003    8003    8003    8003    8005    8005    8005    8005    8007  8007    8007    8007    8009    8009    8009    8009    8011    8011    8011    8011  Port no. on the server ("dwingeloo") for writing
+KEYWORD5    xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx yyy
+//------------------------------------------------ control settings--------------------------------------------------------------------------------------------------------------------------------------------------------
+CHANNEL_THRES_LOW   25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  25  threshold low in mV
+CHANNEL_HV   1387   1494    1611    1525    1081    1558    1290    1310    1431    1544    1387   1494    1611    1525    1081    1558    1290    1310    1431    1544    PMT high voltage in Volts
+TRIGG_CONDITION 3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   Atleast 1 out of 4 channels low
+PRE_COIN_TIME   2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    Pre-coincidence time in nsecs.
+COIN_TIME    400    400 400 400 400 400 400 400 400 400  400    400 400 400 400 400 400 400 400 400 Coincidence time in nsecs.
+POST_COIN_TIME  7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    Post-coincidence time in nsecs.
+//END
