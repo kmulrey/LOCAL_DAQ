@@ -1,5 +1,5 @@
 #include "socket_functions.h"
-#define MAX 80
+#define MAX 200
 #define SA struct sockaddr
 
 
@@ -80,7 +80,7 @@ void func_read(int sockfd1)
         printf("From client: %s", buff);
         if ((strncmp(buff, "exit", 4)) == 0) {
             
-            printf("Client Exit...\n");
+            //printf("Client Exit...\n");
             break;
         }
         
@@ -143,4 +143,39 @@ void func_write_auto(int sockfd)
     write(sockfd, buff, sizeof(buff));
     bzero(buff, sizeof(buff));
     
+}
+
+
+
+void func_write_control_message(int sockfd,char *Control_Messages,int n)
+{
+    int bytes_send=write(sockfd,Control_Messages,n) ;
+    printf("bytes sent %d\n", n);
+
+}
+
+void Stop_Lora(int sockfd)    //Stopping DAQ in LORA
+{
+    unsigned char dat[3] ;
+    bzero(dat, sizeof(dat));
+    dat[0]=0x99 ;
+    dat[1]=0xAA ;        //We have used identifier 'AA' for stopping DAQ in LORA
+    dat[2]=0x66 ;
+    //write(sockfd,dat,3) ;
+    int bytes_send=write(sockfd,dat,sizeof(dat)) ;
+    //printf("bytes sent %d\n", bytes_send);
+
+}
+
+void func_write_random(int sockfd)
+{
+    int n;
+    n = rand() % 100 + 1;
+    char buff[10];
+    bzero(buff, sizeof(buff));
+    buff[0]=((unsigned short)(n) & 0x00ff) ;
+    //sprintf(buff, "%d", n);
+    printf("sending %x\n", buff[0]);
+
+    int bytes_send=write(sockfd,buff,sizeof(buff)) ;
 }

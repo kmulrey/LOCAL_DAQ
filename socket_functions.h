@@ -35,8 +35,9 @@ void func_read_auto(int);
 void func_write_auto(int);
 
 
-
-
+void func_write_control_message(int,char*,int) ;
+void Stop_Lora(int) ;
+void func_write_random(int);
 
 
 

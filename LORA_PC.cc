@@ -25,6 +25,13 @@
 
 int main(int argc, char **argv)
 {
+    DEVICE *unit = new DEVICE();
+    char filename[]="input.txt";
+    unit->Read_Message_File(filename,1);
+    unit->Build_Messages();
+
+
+    
     
     struct socket_connection sock_listen;
     struct socket_connection sock_send;
@@ -46,22 +53,27 @@ int main(int argc, char **argv)
 
     
     func_read(sock_listen.connfd);
-    sleep(3);
+    sleep(1);
 
-    func_write_auto(sock_listen.connfd);
+    //func_write_auto(sock_send.connfd);
+    printf("writing control messages...\n");
+    func_write_control_message(sock_send.connfd,unit->Control_Messages,sizeof(unit->Control_Messages));
+    printf("done control messages...\n");
 
+    usleep(500000);
+    //for(int i=0; i<2; i++){
+    //     func_write_random(sock_send.connfd);
+    //     usleep(500000);
+    // }
     
     
+    
+    Stop_Lora(sock_send.connfd);
     
     close(sock_listen.sockfd);
     close(sock_send.sockfd);
-     
-    //char filename100;// ="input.txt";
-    //DEVICE *unit = new DEVICE();
-    //char filename[]="input.txt";
-    //unit->Read_Message_File(filename,1);
-    //unit->Build_Messages();
     
+
     return 0;
 }
 

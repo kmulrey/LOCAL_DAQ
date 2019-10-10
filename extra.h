@@ -54,10 +54,10 @@ class DEVICE
             unsigned short Control_Parameters[100] ;
         } messages ;
         unsigned short VALUE ;
-        unsigned char Control_Messages[200] ;
 
     public:
         void Read_Message_File(char*,int) ;
         void Build_Messages() ;
+        char Control_Messages[200] ;
 
 };
