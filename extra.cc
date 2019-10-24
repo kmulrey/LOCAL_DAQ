@@ -51,52 +51,44 @@ void DEVICE:: Read_Message_File(char* filename,int col)
         if(col==20) strcpy(value,value20) ;
         if(strncmp(keyword,"SYS_NAME",strlen("SYS_NAME"))==0)
         {
-            strcpy(messages.SYS_NAME,value) ;
+            strcpy(messages.SYS_NAME[col-1],value) ;
            // printf("* %s\n",messages.SYS_NAME) ;
         }
         if(strncmp(keyword,"UNIT_SERIAL_NO",strlen("UNIT_SERIAL_NO"))==0)
         {
-            strcpy(messages.UNIT_SERIAL_NO,value) ;
+            strcpy(messages.UNIT_SERIAL_NO[col-1],value) ;
             //printf("* %s\n",messages.UNIT_SERIAL_NO) ;
         }
         if(strncmp(keyword,"PORT_NO_WRITE",strlen("PORT_NO_WRITE"))==0)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
-            messages.PORT_NO_WRITE=VALUE ;
+            messages.PORT_NO_WRITE[col-1]=VALUE ;
             //printf("* PORT_NO_WRITE=%d\n",messages.PORT_NO_WRITE) ;
         }
         if(strncmp(keyword,"PORT_NO_READ",strlen("PORT_NO_READ"))==0)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
-            messages.PORT_NO_READ=VALUE ;
+            messages.PORT_NO_READ[col-1]=VALUE ;
             //printf("* PORT_NO_READ=%d\n",messages.PORT_NO_READ) ;
         }
         
         // include all parameters we need 
-        
-        if(strncmp(keyword,"CHANNEL_THRES_LOW",strlen("CHANNEL_THRES_LOW"))==0)
-        {
-            std::istringstream V(value) ;
-            V>>VALUE ;
-            messages.Control_Parameters[0]=VALUE ;
-            printf("CHANNEL_THRES_LOW=%d\n",messages.Control_Parameters[0]) ;
-        }
-        
+
         if(strncmp(keyword,"CHANNEL_HV",strlen("CHANNEL_HV"))==0)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
-            messages.Control_Parameters[1]=VALUE ;
-            printf("CHANNEL_HV=%d\n",messages.Control_Parameters[1]) ;
+            messages.CHANNEL_HV[col-1]=VALUE ;
+            //printf("CHANNEL_HV=%d\n",messages.Control_Parameters[1]) ;
         }
         
         if(strncmp(keyword,"TRIGG_CONDITION",strlen("TRIGG_CONDITION"))==0)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
-            messages.Control_Parameters[2]=VALUE ;
+            messages.TRIGG_CONDITION[col-1]=VALUE ;
             //printf("TRIGG_CONDITION=%d\n",messages.Control_Parameters[2]) ;
         }
         
@@ -104,27 +96,113 @@ void DEVICE:: Read_Message_File(char* filename,int col)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
-            messages.Control_Parameters[3]=VALUE ;
+            messages.PRE_COIN_TIME[col-1]=VALUE ;
             //printf("PRE_COIN_TIME=%d\n",messages.Control_Parameters[3]) ;
-        }
-        
-        if(strncmp(keyword,"COIN_TIME",strlen("COIN_TIME"))==0)
-        {
-            std::istringstream V(value) ;
-            V>>VALUE ;
-            messages.Control_Parameters[4]=VALUE ;
-            //printf("COIN_TIME=%d\n",messages.Control_Parameters[4]) ;
         }
         
         if(strncmp(keyword,"POST_COIN_TIME",strlen("POST_COIN_TIME"))==0)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
-            messages.Control_Parameters[5]=VALUE ;
+            messages.POST_COIN_TIME[col-1]=VALUE ;
             //printf("POST_COIN_TIME=%d\n",messages.Control_Parameters[5]) ;
         }
-
         
+        if(strncmp(keyword,"GAIN_CORRECTION",strlen("GAIN_CORRECTION"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.GAIN_CORRECTION[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"OFFSET_CORRECTION",strlen("OFFSET_CORRECTION"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.OFFSET_CORRECTION[col-1]=VALUE ;
+        }
+
+        if(strncmp(keyword,"INTEGRATION_TIME",strlen("INTEGRATION_TIME"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.INTEGRATION_TIME[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"BASE_MAX",strlen("BASE_MAX"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.BASE_MAX[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"BASE_MIN",strlen("BASE_MIN"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.BASE_MIN[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"SIG_T1",strlen("SIG_T1"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.SIG_T1[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"SIG_T2",strlen("SIG_T2"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.SIG_T2[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"TPREV",strlen("TPREV"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TPREV[col-1]=VALUE ;
+        }
+        if(strncmp(keyword,"TPER",strlen("TPER"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TPER[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"TCMAX",strlen("TCMAX"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TCMAX[col-1]=VALUE ;
+        }
+        if(strncmp(keyword,"NCMAX",strlen("NCMAX"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.NCMAX[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"NCMIN",strlen("NCMIN"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.NCMIN[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"QMAX",strlen("QMAX"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.QMAX[col-1]=VALUE ;
+        }
+        
+        if(strncmp(keyword,"QMIN",strlen("QMIN"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.QMIN[col-1]=VALUE ;
+        }
         
         
     }
@@ -135,33 +213,274 @@ void DEVICE:: Read_Message_File(char* filename,int col)
 
 }
 
+/*
+unsigned short ctrllist[9]={0x0199,0x0012,0x0003,0x0010,0x000f,0x0320,0x0000,0x0000,0x6666};
+*/
 
-void DEVICE:: Build_Messages()
+void DEVICE:: Read_Parameter_Mode_File(char* filename)
 {
-    Control_Messages[0]=((unsigned short)0x99);
-    Control_Messages[1]=((unsigned short) 0x20) ;
+    printf("reading input\n");
+    FILE *fp=fopen(filename,"r") ;
+    
+
+    
+    
+
+    while(fgets(message,400,fp)!=NULL)
+    {
+        if(strncmp(message,"//",strlen("//"))==0){
+            continue ;}
+        std::istringstream M (message) ;
+        //printf("%s\n",message);
+        M>>keyword>>value;
+        
+        if(strncmp(keyword,"TRIGGER_ENABLE_1",strlen("TRIGGER_ENABLE_1"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_1=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"TRIGGER_ENABLE_2",strlen("TRIGGER_ENABLE_2"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_2=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"TRIGGER_ENABLE_3",strlen("TRIGGER_ENABLE_3"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_3=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"TRIGGER_ENABLE_4",strlen("TRIGGER_ENABLE_4"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_4=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"TRIGGER_ENABLE_CAL",strlen("TRIGGER_ENABLE_CAL"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_CAL=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"TRIGGER_ENABLE_TEN_SEC",strlen("TRIGGER_ENABLE_TEN_SEC"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_TEN_SEC=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"TRIGGER_ENABLE_EXT",strlen("TRIGGER_ENABLE_EXT"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_ENABLE_EXT=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"FULL_SCALE_ENABLE",strlen("FULL_SCALE_ENABLE"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.FULL_SCALE_ENABLE=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"PPS_ENABLE",strlen("PPS_ENABLE"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.PPS_ENABLE=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"DAQ_ENABLE",strlen("DAQ_ENABLE"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.DAQ_ENABLE=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"CHANNEL_READOUT_1",strlen("CHANNEL_READOUT_1"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.CHANNEL_READOUT_1=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"CHANNEL_READOUT_2",strlen("CHANNEL_READOUT_2"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.CHANNEL_READOUT_2=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"CHANNEL_READOUT_3",strlen("CHANNEL_READOUT_3"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.CHANNEL_READOUT_3=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"CHANNEL_READOUT_4",strlen("CHANNEL_READOUT_4"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.CHANNEL_READOUT_4=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        
+        
+        if(strncmp(keyword,"TRIGGER_RATE_DIVIDER",strlen("TRIGGER_RATE_DIVIDER"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.TRIGGER_RATE_DIVIDER=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        if(strncmp(keyword,"READOUT_TIME",strlen("READOUT_TIME"))==0)
+        {
+            std::istringstream V(value) ;
+            V>>VALUE ;
+            messages.READOUT_TIME=VALUE;
+            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
+        }
+        
+        
+        
+        
+        
+      
+    }
+    
+    fclose(fp) ;
+    
+}
+
+
+
+
+
+void DEVICE:: Build_Messages(int col)
+{
+    Control_Messages[col][0]=((unsigned short)0x99);
+    Control_Messages[col][1]=((unsigned short) 0x20) ;
     //channel
-    Control_Messages[2]=((unsigned short) 0x1) ;
-    //threshold
-    Control_Messages[4]=((unsigned short)(messages.Control_Parameters[0]) & 0xff00)>>8 ;
-    Control_Messages[5]=((unsigned short)(messages.Control_Parameters[0]) & 0x00ff) ;
+    Control_Messages[col][2]=((unsigned short) col) ;
+    
     //HV
-    Control_Messages[6]=((unsigned short)(messages.Control_Parameters[1]) & 0xff00)>>8 ;
-    Control_Messages[7]=((unsigned short)(messages.Control_Parameters[1]) & 0x00ff) ;
-    //trigger
-    Control_Messages[8]=((unsigned short)(messages.Control_Parameters[2]) & 0xff00)>>8 ;
-    Control_Messages[9]=((unsigned short)(messages.Control_Parameters[2]) & 0x00ff) ;
+    Control_Messages[col][3]=((unsigned short)(messages.CHANNEL_HV[col-1]) & 0xff00)>>8 ;
+    Control_Messages[col][4]=((unsigned short)(messages.CHANNEL_HV[col-1]) & 0x00ff) ;
+    //trig_cond
+    Control_Messages[col][5]=((unsigned short)(messages.TRIGG_CONDITION[col-1]));
+    
     //pre-coincidence time
-    Control_Messages[10]=((unsigned short)(messages.Control_Parameters[3]/5) & 0xff00)>>8 ;
-    Control_Messages[11]=((unsigned short)(messages.Control_Parameters[3]/5) & 0x00ff) ;
-    //coincidence time
-    Control_Messages[12]=((unsigned short)(messages.Control_Parameters[4]/5) & 0xff00)>>8 ;
-    Control_Messages[13]=((unsigned short)(messages.Control_Parameters[4]/5) & 0x00ff) ;
+    Control_Messages[col][6]=((unsigned short)(messages.PRE_COIN_TIME[col-1]/5) & 0xff00)>>8 ;
+    Control_Messages[col][7]=((unsigned short)(messages.PRE_COIN_TIME[col-1]/5) & 0x00ff) ;
+
     //post-coincidence time
-    Control_Messages[14]=((unsigned short)(messages.Control_Parameters[5]/5) & 0xff00)>>8 ;
-    Control_Messages[15]=((unsigned short)(messages.Control_Parameters[5]/5) & 0x00ff) ;
-    Control_Messages[199]=((unsigned short)0x66);
+    Control_Messages[col][8]=((unsigned short)(messages.POST_COIN_TIME[col-1]/5) & 0xff00)>>8 ;
+    Control_Messages[col][9]=((unsigned short)(messages.POST_COIN_TIME[col-1]/5) & 0x00ff) ;
+    
+    //gain correction
+    Control_Messages[col][10]=((unsigned short)(messages.GAIN_CORRECTION[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col][11]=((unsigned short)(messages.GAIN_CORRECTION[col-1] ) & 0x00ff) ;
+    
+    //offset correction
+    Control_Messages[col][12]=((unsigned short)(messages.OFFSET_CORRECTION[col-1]));
+    Control_Messages[col][13]=((unsigned short)(messages.INTEGRATION_TIME[col-1] ));
+    
+    //base max
+    Control_Messages[col][14]=((unsigned short)(messages.BASE_MAX[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col][15]=((unsigned short)(messages.BASE_MAX[col-1] ) & 0x00ff) ;
+    
+    //base min
+    Control_Messages[col][16]=((unsigned short)(messages.BASE_MIN[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col][17]=((unsigned short)(messages.BASE_MIN[col-1] ) & 0x00ff) ;
+    
+    //signal T1
+    Control_Messages[col][18]=((unsigned short)(messages.SIG_T1[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col][19]=((unsigned short)(messages.SIG_T1[col-1] ) & 0x00ff) ;
+    
+    //signal T2
+    Control_Messages[col][20]=((unsigned short)(messages.SIG_T2[col-1]) & 0xff00)>>8 ;
+    Control_Messages[col][21]=((unsigned short)(messages.SIG_T2[col-1] ) & 0x00ff) ;
+    
+    //t prev
+    Control_Messages[col][22]=((unsigned short)(messages.TPREV[col-1] )) ;
+    
+    //t per
+    Control_Messages[col][23]=((unsigned short)(messages.TPER[col-1] )) ;
+    
+    //tcmax
+    Control_Messages[col][24]=((unsigned short)(messages.TCMAX[col-1]))  ;
+    
+    //ncmax
+    Control_Messages[col][25]=((unsigned short)(messages.NCMAX[col-1] ))  ;
+    
+    //ncmin
+    Control_Messages[col][26]=((unsigned short)(messages.NCMIN[col-1] ))  ;
+    
+    //qmax
+    Control_Messages[col][27]=((unsigned short)(messages.QMAX[col-1] ));
+    
+    //qmin
+    Control_Messages[col][28]=((unsigned short)(messages.QMIN[col-1] ));
+                                                
+
+    
+    
+    Control_Messages[col][199]=((unsigned short)0x66);
+    
 
 }
 
 
+void DEVICE:: Build_Mode_Messages()
+{
+    
+    printf("building mode messages\n");
+    Control_Mode_Messages[0]=((unsigned short)0x99);
+    Control_Mode_Messages[1]=((unsigned short) 0x21) ;  // identifier for parammode message
+
+    //CONTROL REGISTER -> 2 bits
+    unsigned short control=0;
+    control= (messages.FULL_SCALE_ENABLE<<2) | (messages.PPS_ENABLE<<1)| (messages.DAQ_ENABLE<<0);
+    //printf("%x\n",control);
+    Control_Mode_Messages[3]=((unsigned short)(control) & 0xff00)>>8 ;
+    Control_Mode_Messages[4]=((unsigned short)(control) & 0x00ff) ;
+  
+    
+    
+    //TRIGGER ENABLE MASK-> 2 bits
+    unsigned short trigger=0;
+    trigger= (messages.TRIGGER_ENABLE_4<<11) | (messages.TRIGGER_ENABLE_3<<10)| (messages.TRIGGER_ENABLE_2<<9)|(messages.TRIGGER_ENABLE_1<<8)|(messages.TRIGGER_ENABLE_CAL<<6)|(messages.TRIGGER_ENABLE_TEN_SEC<<5)|(messages.TRIGGER_ENABLE_EXT<<4);
+    //printf("%x\n",trigger);
+    Control_Mode_Messages[5]=((unsigned short)(trigger) & 0xff00)>>8 ;
+    Control_Mode_Messages[6]=((unsigned short)(trigger) & 0x00ff) ;
+
+
+    //CHANNEL READOUT -> 1 bits, TRIGGER RATE DIVIDER
+    unsigned short chan=0;
+    unsigned short rate=0;
+
+    chan= (messages.CHANNEL_READOUT_4<<3) | (messages.CHANNEL_READOUT_3<<2)| (messages.CHANNEL_READOUT_2<<1)|(messages.CHANNEL_READOUT_1<<0);
+    //printf("%x\n",chan);
+    rate=messages.TRIGGER_RATE_DIVIDER;
+
+    
+    Control_Mode_Messages[7]=rate;
+    Control_Mode_Messages[8]=chan;
+
+    
+    //COMMON COIN READOUT TIME -> 2 bits
+    unsigned short coin=0;
+    coin=messages.READOUT_TIME;
+    Control_Mode_Messages[9]=((unsigned short)(coin) & 0xff00)>>8 ;
+    Control_Mode_Messages[10]=((unsigned short)(coin) &  0x00ff);   
+    Control_Mode_Messages[199]=((unsigned short)0x66);
+
+}

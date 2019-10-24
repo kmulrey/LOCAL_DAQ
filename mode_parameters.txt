@@ -1,0 +1,41 @@
+//  Digitizer mode parameters
+//  Control Register: bits 15-0
+//  enable auto reboot/unused/unused/enable filter 5/enable filter 4/enable filter 3/enable filter 2/enable filter 1/DCO edge select/fake ADC values/GPS program mode/unused/filter read out enable/ full scale enable/PPS enable/DAQ enable
+
+FULL_SCALE_ENABLE 0
+PPS_ENABLE 1
+DAQ_ENABLE 1
+
+
+
+
+
+// Trigger Enable Mask: bits 15-0
+// unused/unused/unused/unused/enable ch4 trigger/enable ch3 trigger/enable ch2 trigger/enable ch1 trigger/enable ch1 and ch2 trigger/enable calibration trigger/enable 10 seconds trigger/enable external trigger/ unused/ enable not ch1 and ch2 trigger, enable red ch1 and ch2 trigger/ enable ch3 and ch4 trigger
+
+TRIGGER_ENABLE_1 1
+TRIGGER_ENABLE_2 1
+TRIGGER_ENABLE_3 1
+TRIGGER_ENABLE_4 1
+TRIGGER_ENABLE_CAL 1
+TRIGGER_ENABLE_TEN_SEC 0
+TRIGGER_ENABLE_EXT 0
+
+
+
+
+// Channel Readout Mask: bits 7-0
+// unused/unused/unused/unused/ ch4 readout enable/ ch3 readout enable/ ch2 readout enable/ ch1 readout enable
+CHANNEL_READOUT_1 1
+CHANNEL_READOUT_2 1
+CHANNEL_READOUT_3 1
+CHANNEL_READOUT_4 1
+
+// Test trigger rate divider: bits 7-0
+// trigger rate 4800/(N+1) Hz
+TRIGGER_RATE_DIVIDER 255
+
+
+//Common Coincidene Readout Time: bits 15-0
+// 0-20480 ns: 0-4096 in steps of 5ns (default 500ns)
+READOUT_TIME 500

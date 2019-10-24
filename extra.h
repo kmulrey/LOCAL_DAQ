@@ -41,23 +41,66 @@ class DEVICE
 
         char defn[100] ;
         char value[50] ;
+    
 
 
         struct SEND_MESSAGES
         {
-            char SYS_NAME[50] ;
-            char UNIT_STATE[50] ;
-            char UNIT_SERIAL_NO[50] ;
-            unsigned short PORT_NO_WRITE ;
-            unsigned short PORT_NO_READ ;
+            char SYS_NAME[4][50] ;
+            char UNIT_STATE[4][50] ;
+            char UNIT_SERIAL_NO[4][50] ;
+            unsigned short PORT_NO_WRITE[4];
+            unsigned short PORT_NO_READ[4] ;
+            unsigned short TRIGGER_ENABLE_1;
+            unsigned short TRIGGER_ENABLE_2;
+            unsigned short TRIGGER_ENABLE_3;
+            unsigned short TRIGGER_ENABLE_4;
+            unsigned short TRIGGER_ENABLE_CAL;
+            unsigned short TRIGGER_ENABLE_TEN_SEC;
+            unsigned short TRIGGER_ENABLE_EXT;
+            unsigned short READOUT_TIME;
+            unsigned short TRIGGER_RATE_DIVIDER;
+            unsigned short CHANNEL_READOUT_1;
+            unsigned short CHANNEL_READOUT_2;
+            unsigned short CHANNEL_READOUT_3;
+            unsigned short CHANNEL_READOUT_4;
+            unsigned short FULL_SCALE_ENABLE;
+            unsigned short PPS_ENABLE;
+            unsigned short DAQ_ENABLE;
+            
+            unsigned short CHANNEL_HV[4];
+            unsigned short TRIGG_CONDITION[4];
+            unsigned short PRE_COIN_TIME[4];
+            unsigned short POST_COIN_TIME[4];
+            unsigned short GAIN_CORRECTION[4];
+            unsigned short OFFSET_CORRECTION[4];
+            unsigned short INTEGRATION_TIME[4];
+            unsigned short BASE_MAX[4];
+            unsigned short BASE_MIN[4];
+            unsigned short SIG_T1[4];
+            unsigned short SIG_T2[4];
+            unsigned short TPREV[4];
+            unsigned short TPER[4];
+            unsigned short TCMAX[4];
+            unsigned short NCMAX[4];
+            unsigned short NCMIN[4];
+            unsigned short QMAX[4];
+            unsigned short QMIN[4];
 
+            
+            
+            
             unsigned short Control_Parameters[100] ;
+            unsigned short Mode_Parameters[100];
         } messages ;
         unsigned short VALUE ;
 
     public:
         void Read_Message_File(char*,int) ;
-        void Build_Messages() ;
-        char Control_Messages[200] ;
+        void Read_Parameter_Mode_File(char*) ;
+        void Build_Messages(int) ;
+        void Build_Mode_Messages() ;
+        char Control_Messages[4][200] ;
+        char Control_Mode_Messages[200] ;
 
 };
