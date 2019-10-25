@@ -81,8 +81,10 @@ void DEVICE:: Read_Message_File(char* filename,int col)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.CHANNEL_HV[col-1]=VALUE ;
-            //printf("CHANNEL_HV=%d\n",messages.Control_Parameters[1]) ;
+            printf("CHANNEL_HV=%d\n",messages.CHANNEL_HV[col-1]) ;
         }
+        
+        
         
         if(strncmp(keyword,"TRIGG_CONDITION",strlen("TRIGG_CONDITION"))==0)
         {
@@ -309,14 +311,12 @@ void DEVICE:: Read_Parameter_Mode_File(char* filename)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.CHANNEL_READOUT_1=VALUE;
-            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
         }
         if(strncmp(keyword,"CHANNEL_READOUT_2",strlen("CHANNEL_READOUT_2"))==0)
         {
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.CHANNEL_READOUT_2=VALUE;
-            //printf("TRIGGER_ENABLE_1=%d\n",messages.TRIGGER_ENABLE_1) ;
         }
         if(strncmp(keyword,"CHANNEL_READOUT_3",strlen("CHANNEL_READOUT_3"))==0)
         {
@@ -366,74 +366,75 @@ void DEVICE:: Read_Parameter_Mode_File(char* filename)
 
 void DEVICE:: Build_Messages(int col)
 {
-    Control_Messages[col][0]=((unsigned short)0x99);
-    Control_Messages[col][1]=((unsigned short) 0x20) ;
+    Control_Messages[col-1][0]=((unsigned short)0x99);
+    Control_Messages[col-1][1]=((unsigned short) 0x20) ;
     //channel
-    Control_Messages[col][2]=((unsigned short) col) ;
+    Control_Messages[col-1][2]=((unsigned short) col) ;
     
     //HV
-    Control_Messages[col][3]=((unsigned short)(messages.CHANNEL_HV[col-1]) & 0xff00)>>8 ;
-    Control_Messages[col][4]=((unsigned short)(messages.CHANNEL_HV[col-1]) & 0x00ff) ;
+    //printf("HV: %d",messages.CHANNEL_HV[col-1]);
+    Control_Messages[col-1][3]=((unsigned short)(messages.CHANNEL_HV[col-1]) & 0xff00)>>8 ;
+    Control_Messages[col-1][4]=((unsigned short)(messages.CHANNEL_HV[col-1]) & 0x00ff) ;
     //trig_cond
-    Control_Messages[col][5]=((unsigned short)(messages.TRIGG_CONDITION[col-1]));
+    Control_Messages[col-1][5]=((unsigned short)(messages.TRIGG_CONDITION[col-1]));
     
     //pre-coincidence time
-    Control_Messages[col][6]=((unsigned short)(messages.PRE_COIN_TIME[col-1]/5) & 0xff00)>>8 ;
-    Control_Messages[col][7]=((unsigned short)(messages.PRE_COIN_TIME[col-1]/5) & 0x00ff) ;
+    Control_Messages[col-1][6]=((unsigned short)(messages.PRE_COIN_TIME[col-1]/5) & 0xff00)>>8 ;
+    Control_Messages[col-1][7]=((unsigned short)(messages.PRE_COIN_TIME[col-1]/5) & 0x00ff) ;
 
     //post-coincidence time
-    Control_Messages[col][8]=((unsigned short)(messages.POST_COIN_TIME[col-1]/5) & 0xff00)>>8 ;
-    Control_Messages[col][9]=((unsigned short)(messages.POST_COIN_TIME[col-1]/5) & 0x00ff) ;
+    Control_Messages[col-1][8]=((unsigned short)(messages.POST_COIN_TIME[col-1]/5) & 0xff00)>>8 ;
+    Control_Messages[col-1][9]=((unsigned short)(messages.POST_COIN_TIME[col-1]/5) & 0x00ff) ;
     
     //gain correction
-    Control_Messages[col][10]=((unsigned short)(messages.GAIN_CORRECTION[col-1] ) & 0xff00)>>8 ;
-    Control_Messages[col][11]=((unsigned short)(messages.GAIN_CORRECTION[col-1] ) & 0x00ff) ;
+    Control_Messages[col-1][10]=((unsigned short)(messages.GAIN_CORRECTION[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col-1][11]=((unsigned short)(messages.GAIN_CORRECTION[col-1] ) & 0x00ff) ;
     
     //offset correction
-    Control_Messages[col][12]=((unsigned short)(messages.OFFSET_CORRECTION[col-1]));
-    Control_Messages[col][13]=((unsigned short)(messages.INTEGRATION_TIME[col-1] ));
+    Control_Messages[col-1][12]=((unsigned short)(messages.OFFSET_CORRECTION[col-1]));
+    Control_Messages[col-1][13]=((unsigned short)(messages.INTEGRATION_TIME[col-1] ));
     
     //base max
-    Control_Messages[col][14]=((unsigned short)(messages.BASE_MAX[col-1] ) & 0xff00)>>8 ;
-    Control_Messages[col][15]=((unsigned short)(messages.BASE_MAX[col-1] ) & 0x00ff) ;
+    Control_Messages[col-1][14]=((unsigned short)(messages.BASE_MAX[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col-1][15]=((unsigned short)(messages.BASE_MAX[col-1] ) & 0x00ff) ;
     
     //base min
-    Control_Messages[col][16]=((unsigned short)(messages.BASE_MIN[col-1] ) & 0xff00)>>8 ;
-    Control_Messages[col][17]=((unsigned short)(messages.BASE_MIN[col-1] ) & 0x00ff) ;
+    Control_Messages[col-1][16]=((unsigned short)(messages.BASE_MIN[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col-1][17]=((unsigned short)(messages.BASE_MIN[col-1] ) & 0x00ff) ;
     
     //signal T1
-    Control_Messages[col][18]=((unsigned short)(messages.SIG_T1[col-1] ) & 0xff00)>>8 ;
-    Control_Messages[col][19]=((unsigned short)(messages.SIG_T1[col-1] ) & 0x00ff) ;
+    Control_Messages[col-1][18]=((unsigned short)(messages.SIG_T1[col-1] ) & 0xff00)>>8 ;
+    Control_Messages[col-1][19]=((unsigned short)(messages.SIG_T1[col-1] ) & 0x00ff) ;
     
     //signal T2
-    Control_Messages[col][20]=((unsigned short)(messages.SIG_T2[col-1]) & 0xff00)>>8 ;
-    Control_Messages[col][21]=((unsigned short)(messages.SIG_T2[col-1] ) & 0x00ff) ;
+    Control_Messages[col-1][20]=((unsigned short)(messages.SIG_T2[col-1]) & 0xff00)>>8 ;
+    Control_Messages[col-1][21]=((unsigned short)(messages.SIG_T2[col-1] ) & 0x00ff) ;
     
     //t prev
-    Control_Messages[col][22]=((unsigned short)(messages.TPREV[col-1] )) ;
+    Control_Messages[col-1][22]=((unsigned short)(messages.TPREV[col-1] )) ;
     
     //t per
-    Control_Messages[col][23]=((unsigned short)(messages.TPER[col-1] )) ;
+    Control_Messages[col-1][23]=((unsigned short)(messages.TPER[col-1] )) ;
     
     //tcmax
-    Control_Messages[col][24]=((unsigned short)(messages.TCMAX[col-1]))  ;
+    Control_Messages[col-1][24]=((unsigned short)(messages.TCMAX[col-1]))  ;
     
     //ncmax
-    Control_Messages[col][25]=((unsigned short)(messages.NCMAX[col-1] ))  ;
+    Control_Messages[col-1][25]=((unsigned short)(messages.NCMAX[col-1] ))  ;
     
     //ncmin
-    Control_Messages[col][26]=((unsigned short)(messages.NCMIN[col-1] ))  ;
+    Control_Messages[col-1][26]=((unsigned short)(messages.NCMIN[col-1] ))  ;
     
     //qmax
-    Control_Messages[col][27]=((unsigned short)(messages.QMAX[col-1] ));
+    Control_Messages[col-1][27]=((unsigned short)(messages.QMAX[col-1] ));
     
     //qmin
-    Control_Messages[col][28]=((unsigned short)(messages.QMIN[col-1] ));
+    Control_Messages[col-1][28]=((unsigned short)(messages.QMIN[col-1] ));
                                                 
 
     
     
-    Control_Messages[col][199]=((unsigned short)0x66);
+    Control_Messages[col-1][199]=((unsigned short)0x66);
     
 
 }
@@ -478,7 +479,7 @@ void DEVICE:: Build_Mode_Messages()
     
     //COMMON COIN READOUT TIME -> 2 bits
     unsigned short coin=0;
-    coin=messages.READOUT_TIME;
+    coin=messages.READOUT_TIME/5;
     Control_Mode_Messages[9]=((unsigned short)(coin) & 0xff00)>>8 ;
     Control_Mode_Messages[10]=((unsigned short)(coin) &  0x00ff);   
     Control_Mode_Messages[199]=((unsigned short)0x66);

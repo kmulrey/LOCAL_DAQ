@@ -30,11 +30,15 @@ int main(int argc, char **argv)
     char mode_filename[]="mode_parameters.txt";
 
     unit->Read_Message_File(filename,1);
+    unit->Read_Message_File(filename,2);
+    unit->Read_Message_File(filename,3);
+    unit->Read_Message_File(filename,4);
+
     unit->Read_Parameter_Mode_File(mode_filename);
-    unit->Build_Messages(0);
     unit->Build_Messages(1);
     unit->Build_Messages(2);
     unit->Build_Messages(3);
+    unit->Build_Messages(4);
 
     unit->Build_Mode_Messages();
 
@@ -65,25 +69,25 @@ int main(int argc, char **argv)
     //func_write_auto(sock_send.connfd);
     printf("writing control messages...ch 1\n");
     func_write_control_message(sock_send.connfd,unit->Control_Messages[0],sizeof(unit->Control_Messages[0]));
-    sleep(1);
+    usleep(100000);
     
     printf("writing control messages...ch 2\n");
     func_write_control_message(sock_send.connfd,unit->Control_Messages[1],sizeof(unit->Control_Messages[1]));
-    sleep(1);
+    usleep(100000);
     
     printf("writing control messages...ch 3\n");
     func_write_control_message(sock_send.connfd,unit->Control_Messages[2],sizeof(unit->Control_Messages[2]));
-    sleep(1);
+    usleep(100000);
     
     printf("writing control messages...ch 4\n");
     func_write_control_message(sock_send.connfd,unit->Control_Messages[3],sizeof(unit->Control_Messages[3]));
-    sleep(1);
+    usleep(100000);
 
     func_write_control_message(sock_send.connfd,unit->Control_Mode_Messages,sizeof(unit->Control_Mode_Messages));
 
     printf("done control messages...\n");
-     
-    /*
+     /*
+
     usleep(500000);
     //for(int i=0; i<2; i++){
     //     func_write_random(sock_send.connfd);
@@ -93,10 +97,10 @@ int main(int argc, char **argv)
     
     
     Stop_Lora(sock_send.connfd);
-    
+    */
     close(sock_listen.sockfd);
     close(sock_send.sockfd);
-    */
+
 
     return 0;
 }
