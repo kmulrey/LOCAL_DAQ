@@ -1,4 +1,7 @@
 #include "socket_functions.h"
+#include <fcntl.h>
+#include <sstream>
+#include <stdio.h>
 #define MAX 200
 #define SA struct sockaddr
 
@@ -57,12 +60,16 @@ void accept_socket(socket_connection* sock){
     // Accept the data packet from client and verification
     //sock->connfd = accept(sock->sockfd, (SA*)&sock->cli, &sock->len);
     sock->connfd = accept(sock->sockfd, (struct sockaddr*)&sock->cli, &sock->len);
+    int x;
     
     if (sock->connfd < 0) {
         printf("server acccept failed...\n");
         exit(0);
     }
     else
+    
+        x=fcntl(sock->sockfd,F_GETFL,0) ;        // Get socket flags
+        fcntl(sock->sockfd,F_SETFL,x | O_NONBLOCK) ;    // Add non-blocking flag
         printf("server acccepted the client...\n");
 }
 
@@ -168,15 +175,19 @@ void Stop_Lora(int sockfd)    //Stopping DAQ in LORA
 
 }
 
-void func_write_random(int sockfd)
-{
-    int n;
-    n = rand() % 100 + 1;
-    char buff[10];
-    bzero(buff, sizeof(buff));
-    buff[0]=((unsigned short)(n) & 0x00ff) ;
-    //sprintf(buff, "%d", n);
-    printf("sending %x\n", buff[0]);
 
-    int bytes_send=write(sockfd,buff,sizeof(buff)) ;
+
+int func_listen(int sockfd1){
+    int r=0;
+    uint8_t buff[MAX];
+    bzero(buff, MAX);
+    read(sockfd1, buff, sizeof(buff));
+    if(buff[0]!=0){
+   
+        printf("message from client!  %x\n",buff[0]);
+        if(buff[0]==0x99)
+        {printf("  --->event!\n");}
+    }
+    bzero(buff, MAX);
+    return r;
 }

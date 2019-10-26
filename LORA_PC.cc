@@ -24,53 +24,7 @@
 #define    PORT1    8002
 #define    PORT2    8003
 
-/*
-void disable_canonical(){
-    struct termios old = {0};
-    if (tcgetattr(0, &old) < 0)
-    perror("tcsetattr()");
-    old.c_lflag &= ~ICANON;
-    old.c_lflag &= ~ECHO;
-    old.c_cc[VMIN] = 1;
-    old.c_cc[VTIME] = 0;
-    if (tcsetattr(0, TCSANOW, &old) < 0)
-    perror("tcsetattr ICANON");
-}
 
-void enable_canonical(){
-    struct termios old = {0};
-    if (tcgetattr(0, &old) < 0)
-    perror("tcsetattr()");
-    old.c_lflag |= ICANON;
-    old.c_lflag |= ECHO;
-    old.c_cc[VMIN] = 1;
-    old.c_cc[VTIME] = 0;
-    if (tcsetattr(0, TCSANOW, &old) < 0)
-    perror("tcsetattr ICANON");
-}
-
-bool key_pressed(char c){
-    struct pollfd fds[1];
-    fds[0].fd = 0;
-    fds[0].events = POLLIN;
-    fds[0].revents = 0;
-    int r = poll(fds, 1, 1);
-    if(r > 0){
-        if(fds[0].revents & POLLIN || fds[0].revents & POLLRDBAND || fds[0].revents & POLLRDNORM){
-            char buffer[1024];
-            memset(buffer, 0, sizeof(buffer));
-            int n = read(0, buffer, sizeof(buffer) -1);
-            for(int i = 0; i < n; ++i){
-                if(buffer[i] == c){
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
- 
- */
 
 //g++ -o LORA LORA_PC.cc
 
@@ -141,16 +95,27 @@ int main(int argc, char **argv)
     
     
     
+    int r=0;
     
+    
+    //printf("listening\n");
+    //r=func_listen(sock_listen.connfd); // read that client is conncted
+    //printf("%d\n",r);
     while(true){
+
+        r=func_listen(sock_listen.connfd); // read that client is conncted
         if(key_pressed('x')){
+            Stop_Lora(sock_send.connfd);
             break;
         }
-        usleep(500);
+
+        
+        
+        usleep(5000);
         //std::cout << "looping...\n";
     }
     
-    
+    //Stop_Lora(sock_send.connfd);
     
     
     enable_canonical();
