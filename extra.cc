@@ -370,6 +370,8 @@ void DEVICE:: Build_Messages(int col)
     Control_Messages[col-1][1]=((unsigned short) 0x20) ;
     //channel
     Control_Messages[col-1][2]=((unsigned short) col) ;
+    //if(col==2){Control_Messages[col-1][2]=((unsigned short) 7) ;}
+        
     
     //HV
     //printf("HV: %d",messages.CHANNEL_HV[col-1]);
@@ -483,5 +485,12 @@ void DEVICE:: Build_Mode_Messages()
     Control_Mode_Messages[9]=((unsigned short)(coin) & 0xff00)>>8 ;
     Control_Mode_Messages[10]=((unsigned short)(coin) &  0x00ff);   
     Control_Mode_Messages[199]=((unsigned short)0x66);
+
+}
+
+void DEVICE:: Build_Finish_Messages(){
+    Finish_Message[0]=((unsigned short)0x99);
+    Finish_Message[1]=((unsigned short)0x25);
+    Finish_Message[2]=((unsigned short)0x66);
 
 }

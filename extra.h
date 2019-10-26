@@ -102,5 +102,6 @@ class DEVICE
         void Build_Mode_Messages() ;
         char Control_Messages[4][200] ;
         char Control_Mode_Messages[200] ;
-
+        char Finish_Message[3];
+        void Build_Finish_Messages();
 };

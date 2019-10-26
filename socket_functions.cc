@@ -149,8 +149,9 @@ void func_write_auto(int sockfd)
 
 void func_write_control_message(int sockfd,char *Control_Messages,int n)
 {
+    Control_Messages[0]=0x99;
     int bytes_send=write(sockfd,Control_Messages,n) ;
-    printf("bytes sent %d\n", n);
+    //printf("bytes sent %d, %x  %x  %x\n", n,Control_Messages[0],Control_Messages[1],Control_Messages[2]);
 
 }
 
