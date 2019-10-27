@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall
 LDFLAGS =
-OBJFILES = LORA_PC.o extra.o socket_functions.o io.o
+OBJFILES = LORA_PC.o extra.o socket_functions.o io.o event.o
 TARGET = LORA
 
 all: $(TARGET)

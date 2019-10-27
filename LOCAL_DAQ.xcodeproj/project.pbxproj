@@ -17,6 +17,9 @@
 		41ACAD4323350FC400B8AA3B /* socket_functions.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = socket_functions.cc; sourceTree = "<group>"; };
 		41ACAD442337F80C00B8AA3B /* extra.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = extra.h; sourceTree = "<group>"; };
 		41ACAD452337F80C00B8AA3B /* extra.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = extra.cc; sourceTree = "<group>"; };
+		41E98BB123661D800033300C /* event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = event.h; sourceTree = "<group>"; };
+		41E98BB223661D800033300C /* event.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = event.cc; sourceTree = "<group>"; };
+		41E98BB323664C8A0033300C /* plot.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = plot.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -24,6 +27,9 @@
 			isa = PBXGroup;
 			children = (
 				41ACAD3F2334D54A00B8AA3B /* LORA_PC.cc */,
+				41E98BB223661D800033300C /* event.cc */,
+				41E98BB323664C8A0033300C /* plot.py */,
+				41E98BB123661D800033300C /* event.h */,
 				41ACAD452337F80C00B8AA3B /* extra.cc */,
 				41ACAD442337F80C00B8AA3B /* extra.h */,
 				41937DED2360BC2100867792 /* mode_parameters.txt */,

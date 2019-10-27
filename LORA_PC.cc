@@ -19,7 +19,7 @@
 #include <termios.h>
 #include "extra.h"
 #include "io.h"
-
+#include "event.h"
 
 #define    PORT1    8002
 #define    PORT2    8003
@@ -31,8 +31,7 @@
 
 int main(int argc, char **argv)
 {
-    
-    
+    /*
     disable_canonical();
 
     
@@ -89,11 +88,28 @@ int main(int argc, char **argv)
 
     func_write_control_message(sock_send.connfd,unit->Finish_Message,sizeof(unit->Finish_Message));
     usleep(100000);
-    
+    */
     
     /////////////////////////////////// listen mode ///////////////////////////////////
     
     
+    
+    
+    
+    
+    
+    
+    uint8_t fake_event[MAX_READOUT];
+
+    
+    char filename[]="test_data/test1.txt";
+    read_fake_file(filename,fake_event);
+    //printf("got event:   %x\n",fake_event[0]);
+    //handle_event(fake_event);
+    write_event(fake_event);
+
+    
+    /*
     
     int r=0;
     
@@ -119,7 +135,7 @@ int main(int argc, char **argv)
     
     
     enable_canonical();
-    
+    */
     
     
     
@@ -135,14 +151,13 @@ int main(int argc, char **argv)
     
     
 
-    
-    //Stop_Lora(sock_send.connfd);
+    /*
 
     close(sock_listen.sockfd);
     close(sock_send.sockfd);
     
     printf("sockets closed. bye!\n");
-
+    */
     return 0;
 }
 

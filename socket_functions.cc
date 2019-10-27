@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include <sstream>
 #include <stdio.h>
-#define MAX 200
+#define MAX 32840
 #define SA struct sockaddr
 
 
@@ -184,9 +184,13 @@ int func_listen(int sockfd1){
     read(sockfd1, buff, sizeof(buff));
     if(buff[0]!=0){
    
-        printf("message from client!  %x\n",buff[0]);
+        printf("message from client!  %x   %lu\n",buff[0],sizeof(buff));
         if(buff[0]==0x99)
-        {printf("  --->event!\n");}
+        {printf("  --->event!\n");
+            
+            
+        }
+        
     }
     bzero(buff, MAX);
     return r;
