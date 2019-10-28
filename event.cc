@@ -9,7 +9,6 @@
 #include <sys/select.h>
 #include <unistd.h>
 #include <string.h>
-#include <fcntl.h>
 #include <sys/socket.h>
 #include <netinet/tcp.h>
 #include <netinet/in.h>
@@ -193,7 +192,7 @@ void write_event(uint8_t *buf){
     fprintf(fptr,"Ch 2 T1,T2: %d %d \n",trigger_T1[1],trigger_T2[1]);
     fprintf(fptr,"Ch 3 T1,T2: %d %d \n",trigger_T1[2],trigger_T2[2]);
     fprintf(fptr,"Ch 4 T1,T2: %d %d \n",trigger_T1[3],trigger_T2[3]);
-    fprintf(fptr," GPS: %02d-%02d-%d %02d:%02d:%02d ",buf[EVENT_GPS+3],buf[EVENT_GPS+2],*sb,
+    fprintf(fptr,"GPS: %02d-%02d-%d %02d:%02d:%02d ",buf[EVENT_GPS+3],buf[EVENT_GPS+2],*sb,
            buf[EVENT_GPS+4],buf[EVENT_GPS+5],buf[EVENT_GPS+6]);
     fprintf(fptr,"CTD: %d\n",event_ctd);
     

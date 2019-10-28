@@ -22,6 +22,7 @@ void make_socket(socket_connection* sock){
     sock->servaddr.sin_family = AF_INET;
     sock->servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     sock->servaddr.sin_port = htons(sock->port);
+   
 }
 
 void bind_socket(socket_connection* sock){
@@ -66,11 +67,11 @@ void accept_socket(socket_connection* sock){
         printf("server acccept failed...\n");
         exit(0);
     }
-    else
     
-        x=fcntl(sock->sockfd,F_GETFL,0) ;        // Get socket flags
-        fcntl(sock->sockfd,F_SETFL,x | O_NONBLOCK) ;    // Add non-blocking flag
-        printf("server acccepted the client...\n");
+    
+    //x=fcntl(sock->sockfd,F_GETFL,0) ;        // Get socket flags
+    fcntl(sock->sockfd,F_SETFL, O_NONBLOCK) ;    // Add non-blocking flag
+    printf("server acccepted the client... \n");
 }
 
 
@@ -79,21 +80,21 @@ void func_read(int sockfd1)
     char buff[MAX];
     int n;
     // infinite loop for chat
-    for (;;) {
+    //for (;;) {
         bzero(buff, MAX);
         // read the message from client and copy it in buffer
         read(sockfd1, buff, sizeof(buff));
         // print buffer which contains the client contents
         printf("From client: %s", buff);
-        if ((strncmp(buff, "exit", 4)) == 0) {
+     //   if ((strncmp(buff, "exit", 4)) == 0) {
             
             //printf("Client Exit...\n");
-            break;
-        }
+       //     break;
+       // }
         
         bzero(buff, MAX);
         n = 0;
-    }
+    //}
 }
 
 void func_write(int sockfd1)
@@ -181,7 +182,9 @@ int func_listen(int sockfd1){
     int r=0;
     uint8_t buff[MAX];
     bzero(buff, MAX);
+    
     read(sockfd1, buff, sizeof(buff));
+    
     if(buff[0]!=0){
    
         printf("message from client!  %x   %lu\n",buff[0],sizeof(buff));
@@ -192,6 +195,7 @@ int func_listen(int sockfd1){
         }
         
     }
+     
     bzero(buff, MAX);
     return r;
 }

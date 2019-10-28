@@ -11,15 +11,17 @@
 #include <arpa/inet.h>
 #include <sys/types.h>
 #include <time.h>
-#include "socket_functions.h"
 #include <poll.h>
 #include <sys/types.h>
 #include <sys/uio.h>
 #include <string.h>
 #include <termios.h>
+#include <fcntl.h> /* Added for the nonblocking socket */
+
 #include "extra.h"
-#include "io.h"
 #include "event.h"
+#include "io.h"
+#include "socket_functions.h"
 
 #define    PORT1    8002
 #define    PORT2    8003
@@ -31,7 +33,7 @@
 
 int main(int argc, char **argv)
 {
-    /*
+    
     disable_canonical();
 
     
@@ -71,7 +73,10 @@ int main(int argc, char **argv)
     listen_socket(&sock_send);
     accept_socket(&sock_send);
     
+   
     func_read(sock_listen.connfd); // read that client is conncted
+    
+    
     sleep(1);
     
 
@@ -88,7 +93,7 @@ int main(int argc, char **argv)
 
     func_write_control_message(sock_send.connfd,unit->Finish_Message,sizeof(unit->Finish_Message));
     usleep(100000);
-    */
+    
     
     /////////////////////////////////// listen mode ///////////////////////////////////
     
@@ -98,7 +103,7 @@ int main(int argc, char **argv)
     
     
     
-    
+    /*
     uint8_t fake_event[MAX_READOUT];
 
     
@@ -107,19 +112,20 @@ int main(int argc, char **argv)
     //printf("got event:   %x\n",fake_event[0]);
     //handle_event(fake_event);
     write_event(fake_event);
-
+     */
     
     /*
-    
     int r=0;
     
-    
-    //printf("listening\n");
+    printf("listening on :%d\n",sock_listen.sockfd);
     //r=func_listen(sock_listen.connfd); // read that client is conncted
     //printf("%d\n",r);
+    
     while(true){
+        printf("in loop\n");
 
-        r=func_listen(sock_listen.connfd); // read that client is conncted
+       // r=func_listen(sock_listen.connfd);
+
         if(key_pressed('x')){
             Stop_Lora(sock_send.connfd);
             break;
@@ -130,34 +136,42 @@ int main(int argc, char **argv)
         usleep(5000);
         //std::cout << "looping...\n";
     }
+     */
+   
+    int r;
+    printf("press 'x' to exit\n");
+
+    while(true){
+
+        
+        r=func_listen(sock_listen.connfd);
+        
+        if(key_pressed('x')){
+            Stop_Lora(sock_send.connfd);
+            break;
+        }
+        
+        
+        
+        usleep(5000);
+        //std::cout << "looping...\n";
+    }
     
-    //Stop_Lora(sock_send.connfd);
     
     
     enable_canonical();
-    */
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+   
      ////////////////////////////////////////////////////////////////////////
     
     
     
 
-    /*
-
     close(sock_listen.sockfd);
     close(sock_send.sockfd);
     
     printf("sockets closed. bye!\n");
-    */
+    
     return 0;
 }
 
