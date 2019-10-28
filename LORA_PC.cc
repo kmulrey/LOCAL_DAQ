@@ -145,7 +145,6 @@ int main(int argc, char **argv)
 
         
         r=func_listen(sock_listen.connfd);
-        
         if(key_pressed('x')){
             Stop_Lora(sock_send.connfd);
             break;

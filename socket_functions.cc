@@ -2,7 +2,9 @@
 #include <fcntl.h>
 #include <sstream>
 #include <stdio.h>
-#define MAX 32840
+#include "event.h"
+
+//#define MAX 32840
 #define SA struct sockaddr
 
 
@@ -176,26 +178,50 @@ void Stop_Lora(int sockfd)    //Stopping DAQ in LORA
 
 }
 
-
+int scope_raw_read(int sockfd1,uint8_t *bf, int32_t size) //ok 24/7/2012
+{
+    int ir;
+    ir =read(sockfd1, (void *)bf, size);
+    return ir;
+}
 
 int func_listen(int sockfd1){
     int r=0;
+    int nread;
     uint8_t buff[MAX];
+    unsigned char rawbuf[4]={0,0,0,0};
+
     bzero(buff, MAX);
+    uint8_t type=0;
+    do{                           // flush scope until start-of-message
+        nread = scope_raw_read(sockfd1,rawbuf,1);
+        // printf("flush\n");
+    } while(rawbuf[0] != 0x99 && nread>0);
     
-    read(sockfd1, buff, sizeof(buff));
+    if(rawbuf[0] != MSG_START && nread>0){    // not a start of message
+        printf("Not a message start %x\n",rawbuf[0]);
+        return(-1);
+    }
     
-    if(buff[0]!=0){
-   
-        printf("message from client!  %x   %lu\n",buff[0],sizeof(buff));
-        if(buff[0]==0x99)
-        {printf("  --->event!\n");
-            
-            
+    int i;
+    read(sockfd1, buff, sizeof(buff)-1);
+
+    //if(buff[0]!=0){
+
+        printf("message from client!  %x   %x  %lu\n",buff[0],buff[1],sizeof(buff));
+        type=buff[0];
+        if(type==0xc0){//c0
+            printf("  --->event!\n");
+            handle_event(buff,sizeof(buff));
         }
         
-    }
-     
-    bzero(buff, MAX);
-    return r;
+/*
+        if(buff[1]==0xc4)//c4
+        {printf("PPS\n");}
+ 
+        */
+        
+    //}
+    //bzero(buff, MAX);
+    return type;
 }

@@ -19,6 +19,7 @@
 #include "event.h"
 
 
+
 void read_fake_file(char *name, uint8_t *fake_event){
     
     printf("opening file:   %s\n",name);
@@ -70,14 +71,30 @@ void read_fake_file(char *name, uint8_t *fake_event){
 
 }
 
-void handle_event(uint8_t *buf){
-    
+void handle_event(uint8_t *buf1, int l){
     printf("parsing event buffer\n");
+    printf("base 8:   %x %x %x %x %x %x %x %x\n",buf1[0],buf1[1],buf1[2],buf1[3],buf1[4],buf1[5],buf1[6],buf1[7]);
+
     int ch_hold[4][5000];
 
     int32_t i,istart,iend,iadc,len[4];
+    //uint16_t sb[MAX];
+    uint8_t buf[MAX];
+
+    buf[0]=0x99;
+    buf[1]=0xc0;
+    buf[2]=0x16;
+    buf[3]=0x00;
+
+    for(i=1;i<MAX;i++){
+        buf[i]=buf1[i-1];
+    }
     uint16_t *sb=(uint16_t *)buf;
-    
+
+    printf("header/id:   %x\n",sb[0]);
+    printf("byte count:   %x\n",sb[1]);
+    printf("trigg pattern:   %x\n",sb[2]);
+
     printf("Event record: 0x%x 0x%x Trigger Mask 0x%04x\n",sb[0],sb[1],sb[2]);
     sb = (unsigned short *)&buf[EVENT_GPS];
     printf("  GPS: %02d-%02d-%d %02d:%02d:%02d ",buf[EVENT_GPS+3],buf[EVENT_GPS+2],*sb,
@@ -88,6 +105,8 @@ void handle_event(uint8_t *buf){
         printf("%d ",*(short *)&buf[EVENT_LENCH1+2*i]);
         len[i] = *(short *)&buf[EVENT_LENCH1+2*i];
     }
+    
+    
     printf("\n");
     printf("Trigger Levels: ");
     for(i=0;i<4;i++) printf("(%d,%d) ",*(short *)&buf[EVENT_THRES1CH1+2*i],
@@ -99,6 +118,7 @@ void handle_event(uint8_t *buf){
     printf("List02: ");
     for(i=EVENT_WINDOWS;i<EVENT_ADC;i++) printf(" 0x%02x",buf[i]);
     printf("\n");
+    
     istart = EVENT_ADC;
     int ch_count=0;
     for(i=0;i<4;i++){
@@ -139,6 +159,7 @@ void handle_event(uint8_t *buf){
     for(c=0; c<4; c++){
         printf("baseline, min %d: %f  %d\n",c+1,baselines[c],min_values[c]);
     }
+     
 }
 
 

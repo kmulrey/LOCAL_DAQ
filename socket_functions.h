@@ -36,7 +36,7 @@ void func_read_auto(int);
 void func_write_auto(int);
 int func_listen(int);
 
-
+int scope_raw_read(int,uint8_t *bf, int32_t size);
 void func_write_control_message(int,char*,int) ;
 void Stop_Lora(int) ;
 

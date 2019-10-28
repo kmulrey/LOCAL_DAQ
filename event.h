@@ -81,6 +81,8 @@
 
 #define N_BASELINE       50
 
+#define MAX 32840
+
 void read_fake_file(char*,uint8_t *);
-void handle_event(uint8_t *);
+void handle_event(uint8_t *, int);
 void write_event(uint8_t *);
