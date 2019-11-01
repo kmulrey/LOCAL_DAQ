@@ -27,14 +27,28 @@
 #define    PORT2    8003
 
 
-
+char runnr[80];
 //g++ -o LORA LORA_PC.cc
 
 
 int main(int argc, char **argv)
 {
     
+
+    if (argc < 2) {
+        printf("Using default runnr 000\n");
+        strcpy(runnr,"000");
+    }
+    else{
+        strcpy(runnr,argv[1]);
+    }
+    printf("runnr: %s\n",runnr);
+
+    
+    
+    
     disable_canonical();
+    
 
     
     DEVICE *unit = new DEVICE();
@@ -99,45 +113,6 @@ int main(int argc, char **argv)
     
     
     
-    
-    
-    
-    
-    /*
-    uint8_t fake_event[MAX_READOUT];
-
-    
-    char filename[]="test_data/test1.txt";
-    read_fake_file(filename,fake_event);
-    //printf("got event:   %x\n",fake_event[0]);
-    //handle_event(fake_event);
-    write_event(fake_event);
-     */
-    
-    /*
-    int r=0;
-    
-    printf("listening on :%d\n",sock_listen.sockfd);
-    //r=func_listen(sock_listen.connfd); // read that client is conncted
-    //printf("%d\n",r);
-    
-    while(true){
-        printf("in loop\n");
-
-       // r=func_listen(sock_listen.connfd);
-
-        if(key_pressed('x')){
-            Stop_Lora(sock_send.connfd);
-            break;
-        }
-
-        
-        
-        usleep(5000);
-        //std::cout << "looping...\n";
-    }
-     */
-   
     int r;
     printf("press 'x' to exit\n");
 

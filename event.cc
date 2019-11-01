@@ -19,6 +19,7 @@
 #include "event.h"
 
 
+extern char runnr[80];
 
 void read_fake_file(char *name, uint8_t *fake_event){
     
@@ -72,8 +73,8 @@ void read_fake_file(char *name, uint8_t *fake_event){
 }
 
 void handle_event(uint8_t *buf1, int l){
-    printf("parsing event buffer\n");
-    printf("base 8:   %x %x %x %x %x %x %x %x\n",buf1[0],buf1[1],buf1[2],buf1[3],buf1[4],buf1[5],buf1[6],buf1[7]);
+    //printf("parsing event buffer\n");
+    //printf("base 8:   %x %x %x %x %x %x %x %x\n",buf1[0],buf1[1],buf1[2],buf1[3],buf1[4],buf1[5],buf1[6],buf1[7]);
 
     int ch_hold[4][5000];
 
@@ -89,11 +90,18 @@ void handle_event(uint8_t *buf1, int l){
     for(i=1;i<MAX;i++){
         buf[i]=buf1[i-1];
     }
+    
+    
+    write_event(buf);
+
+    
     uint16_t *sb=(uint16_t *)buf;
 
-    printf("header/id:   %x\n",sb[0]);
-    printf("byte count:   %x\n",sb[1]);
-    printf("trigg pattern:   %x\n",sb[2]);
+    //printf("header/id:   %x\n",sb[0]);
+    //printf("byte count:   %x\n",sb[1]);
+    //printf("trigg pattern:   %x\n",sb[2]);
+    
+    printf("\n\n\n");
 
     printf("Event record: 0x%x 0x%x Trigger Mask 0x%04x\n",sb[0],sb[1],sb[2]);
     sb = (unsigned short *)&buf[EVENT_GPS];
@@ -112,30 +120,31 @@ void handle_event(uint8_t *buf1, int l){
     for(i=0;i<4;i++) printf("(%d,%d) ",*(short *)&buf[EVENT_THRES1CH1+2*i],
                             *(short *)&buf[EVENT_THRES2CH1+2*i]);
     printf("\n");
-    printf("List01: ");
-    for(i=EVENT_CTRL;i<EVENT_WINDOWS;i++) printf(" 0x%02x",buf[i]);
-    printf("\n");
-    printf("List02: ");
-    for(i=EVENT_WINDOWS;i<EVENT_ADC;i++) printf(" 0x%02x",buf[i]);
-    printf("\n");
+    
+//    printf("List01: ");
+    //for(i=EVENT_CTRL;i<EVENT_WINDOWS;i++) printf(" 0x%02x",buf[i]);
+    //printf("\n");
+    //printf("List02: ");
+    //for(i=EVENT_WINDOWS;i<EVENT_ADC;i++) printf(" 0x%02x",buf[i]);
+    //printf("\n");
     
     istart = EVENT_ADC;
     int ch_count=0;
     for(i=0;i<4;i++){
         ch_count=0;
         iend = istart+2*len[i];
-        printf("Channel %d:",i+1);
+        //printf("Channel %d:",i+1);
         for(iadc=istart;iadc<iend;iadc+=2) {
-            if((iadc-istart)==(16*((iadc-istart)/16))) printf("\n");
-            printf("%6d ",*(short *)&buf[iadc]);
+            //if((iadc-istart)==(16*((iadc-istart)/16))) printf("\n");
+            //printf("%6d ",*(short *)&buf[iadc]);
             ch_hold[i][ch_count]=*(short *)&buf[iadc];
             ch_count++;
         }
-        printf("\n");
+        //printf("\n");
         istart = iend;
     }
-    printf("End Marker 0x%4x (last adc 0x%04x)\n",
-           *(unsigned short *)&buf[iend], *(unsigned short *)&buf[iend-2]);
+    //printf("End Marker 0x%4x (last adc 0x%04x)\n",
+      //     *(unsigned short *)&buf[iend], *(unsigned short *)&buf[iend-2]);
     
     
     // readout lengths len[4]
@@ -159,6 +168,7 @@ void handle_event(uint8_t *buf1, int l){
     for(c=0; c<4; c++){
         printf("baseline, min %d: %f  %d\n",c+1,baselines[c],min_values[c]);
     }
+     
      
 }
 
@@ -202,7 +212,10 @@ void write_event(uint8_t *buf){
     
     char filename[80];
     strcpy(filename, "data/");
-    strcat(filename, str);
+    strcat(filename, runnr);
+    strcat(filename, "_");
+
+    strcat(filename,str);
     strcat(filename, ".dat");
     
     FILE *fptr;

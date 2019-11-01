@@ -13,18 +13,18 @@ PRE_COIN_TIME   2000    2000    2000    2000    2000    2000    2000    2000    
 POST_COIN_TIME  7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    Post-coincidence time in nsecs.
 GAIN_CORRECTION 16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297  gain correction
 OFFSET_CORRECTION   127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 offset correction
-INTEGRATION_TIME    100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100 100  integration time for baseline
+INTEGRATION_TIME    10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  integration time for baseline (i^2)*10
 BASE_MAX    10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240  base max
 BASE_MIN    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144 base min
-SIG_T1  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T1
-SIG_T2  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T2
-TPREV  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    prev. time nx5ns
-TPER  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     period time nx25ns
-TCMAX  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    time between threshold crossings nx5ns
-NCMAX  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    max # of threshold crossings
-NCMIN  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    min bumber of threshold crossings
-QMAX  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     max charge
-QMIN  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     min charge
+SIG_T1  500   100   100   100   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T1
+SIG_T2 100   10   10   100   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T2
+TPREV  2   1   1   2   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    prev. time nx5ns
+TPER  2   1   1   2   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     period time nx25ns
+TCMAX  255   255   255   255   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    time between threshold crossings nx5ns
+NCMAX  2   255   255   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    max # of threshold crossings
+NCMIN  255   0   0   255   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    min bumber of threshold crossings
+QMAX  1   255   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     max charge
+QMIN 0   0   255   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     min charge
 
 
 

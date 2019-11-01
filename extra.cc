@@ -91,7 +91,7 @@ void DEVICE:: Read_Message_File(char* filename,int col)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.TRIGG_CONDITION[col-1]=VALUE ;
-            //printf("TRIGG_CONDITION=%d\n",messages.Control_Parameters[2]) ;
+            //printf("TRIGG_CONDITION=%d\n",messages.TRIGG_CONDITION[col-1]) ;
         }
         
         if(strncmp(keyword,"PRE_COIN_TIME",strlen("PRE_COIN_TIME"))==0)
@@ -122,6 +122,8 @@ void DEVICE:: Read_Message_File(char* filename,int col)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.OFFSET_CORRECTION[col-1]=VALUE ;
+            printf("OFFSET=%d\n",messages.OFFSET_CORRECTION[col-1]) ;
+
         }
 
         if(strncmp(keyword,"INTEGRATION_TIME",strlen("INTEGRATION_TIME"))==0)

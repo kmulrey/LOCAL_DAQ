@@ -215,11 +215,12 @@ int func_listen(int sockfd1){
             handle_event(buff,sizeof(buff));
         }
         
-/*
-        if(buff[1]==0xc4)//c4
-        {printf("PPS\n");}
+
+        if(type==0xc4){//c4
+            printf("PPS\n");
+        }
  
-        */
+    
         
     //}
     //bzero(buff, MAX);
