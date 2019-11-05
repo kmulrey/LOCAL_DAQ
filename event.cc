@@ -17,9 +17,12 @@
 #include <errno.h>
 #include "time.h"
 #include "event.h"
-
+#include <bitset>
 
 extern char runnr[80];
+
+extern int event_count;
+extern int trigg_cond;
 
 void read_fake_file(char *name, uint8_t *fake_event){
     
@@ -75,13 +78,15 @@ void read_fake_file(char *name, uint8_t *fake_event){
 void handle_event(uint8_t *buf1, int l){
     //printf("parsing event buffer\n");
     //printf("base 8:   %x %x %x %x %x %x %x %x\n",buf1[0],buf1[1],buf1[2],buf1[3],buf1[4],buf1[5],buf1[6],buf1[7]);
+    printf("__________________________________________\n");
 
-    int ch_hold[4][5000];
+    int ch_hold[4][10000];
 
+    
     int32_t i,istart,iend,iadc,len[4];
     //uint16_t sb[MAX];
     uint8_t buf[MAX];
-
+    
     buf[0]=0x99;
     buf[1]=0xc0;
     buf[2]=0x16;
@@ -91,37 +96,49 @@ void handle_event(uint8_t *buf1, int l){
         buf[i]=buf1[i-1];
     }
     
-    
-    write_event(buf);
 
     
     uint16_t *sb=(uint16_t *)buf;
 
     //printf("header/id:   %x\n",sb[0]);
     //printf("byte count:   %x\n",sb[1]);
-    //printf("trigg pattern:   %x\n",sb[2]);
+    printf("trigg pattern:   %x\n",sb[2]);
     
-    printf("\n\n\n");
+    //printf("\n\n\n");
+    //printf("GPS[0]:  %x \n",sb[3]);
+    //printf("GPS[1]:  %x \n",sb[4]);
+    //printf("GPS[2]:  %x \n",sb[5]);
+    //printf("GPS[3]:  %x \n",sb[6]);
 
-    printf("Event record: 0x%x 0x%x Trigger Mask 0x%04x\n",sb[0],sb[1],sb[2]);
+
+    //printf("Event record: 0x%x 0x%x Trigger Mask 0x%04x\n",sb[0],sb[1],sb[2]);
     sb = (unsigned short *)&buf[EVENT_GPS];
-    printf("  GPS: %02d-%02d-%d %02d:%02d:%02d ",buf[EVENT_GPS+3],buf[EVENT_GPS+2],*sb,
-           buf[EVENT_GPS+4],buf[EVENT_GPS+5],buf[EVENT_GPS+6]);
-    printf("Status 0x%02x CTD %d\n",buf[EVENT_STATUS],*(int *)&buf[EVENT_CTD]);
-    printf("Readout length: ");
+    //std::cout << std::bitset<16>(sb[2]);
+
+    printf("  GPS: %02d-%02d-%d %02d:%02d:%02d ",buf[EVENT_GPS+3],buf[EVENT_GPS+2],*sb,buf[EVENT_GPS+4],buf[EVENT_GPS+5],buf[EVENT_GPS+6]);
+    
+    
+    //printf("CDT:  %x \n",sb[7]<<8||sb[8]);
+
+    
+    
+    //printf("Status 0x%02x CTD %d\n",buf[EVENT_STATUS],*(int *)&buf[EVENT_CTD]);
+    //printf("\n");
+
+    printf("Readout length:  %d samples, %d ns\n ",*(short *)&buf[EVENT_LENCH1+2*0],*(short *)&buf[EVENT_LENCH1+2*0]*5);
     for(i=0;i<4;i++) {
-        printf("%d ",*(short *)&buf[EVENT_LENCH1+2*i]);
+        //printf("%d samples, %d ns\n",*(short *)&buf[EVENT_LENCH1+2*i],*(short *)&buf[EVENT_LENCH1+2*i]*5);
         len[i] = *(short *)&buf[EVENT_LENCH1+2*i];
     }
     
     
-    printf("\n");
+    //printf("\n");
     printf("Trigger Levels: ");
     for(i=0;i<4;i++) printf("(%d,%d) ",*(short *)&buf[EVENT_THRES1CH1+2*i],
                             *(short *)&buf[EVENT_THRES2CH1+2*i]);
     printf("\n");
     
-//    printf("List01: ");
+    //printf("List01: ");
     //for(i=EVENT_CTRL;i<EVENT_WINDOWS;i++) printf(" 0x%02x",buf[i]);
     //printf("\n");
     //printf("List02: ");
@@ -133,20 +150,27 @@ void handle_event(uint8_t *buf1, int l){
     for(i=0;i<4;i++){
         ch_count=0;
         iend = istart+2*len[i];
-        //printf("Channel %d:",i+1);
+        //printf("Channel %d:\n",i+1);
         for(iadc=istart;iadc<iend;iadc+=2) {
             //if((iadc-istart)==(16*((iadc-istart)/16))) printf("\n");
-            //printf("%6d ",*(short *)&buf[iadc]);
+            //printf("%6d   %d\n",*(short *)&buf[iadc],val);
             ch_hold[i][ch_count]=*(short *)&buf[iadc];
+            //printf("%6d<->%d  ", *(short *)&buf[iadc],ch_hold[i][ch_count]);
             ch_count++;
         }
         //printf("\n");
+        //printf("istart:iend---->%d : %d\n",istart,iend);
+
         istart = iend;
+
     }
-    //printf("End Marker 0x%4x (last adc 0x%04x)\n",
-      //     *(unsigned short *)&buf[iend], *(unsigned short *)&buf[iend-2]);
     
-    
+ 
+    printf("End Marker 0x%4x (last adc 0x%04x)\n",*(unsigned short *)&buf[iend], *(unsigned short *)&buf[iend-2]);
+    if(*(unsigned short *)&buf[iend]==0x6666){
+        printf("writing event!!!!\n");
+        write_event(buf);
+    }
     // readout lengths len[4]
     // ch data ch_hold[4][]
     float baselines[4]={0};
@@ -169,7 +193,8 @@ void handle_event(uint8_t *buf1, int l){
         printf("baseline, min %d: %f  %d\n",c+1,baselines[c],min_values[c]);
     }
      
-     
+    printf("__________________________________________\n");
+
 }
 
 
@@ -177,10 +202,10 @@ void handle_event(uint8_t *buf1, int l){
 
 void write_event(uint8_t *buf){
 
-    int32_t i,c,istart,iend,iadc,len[4],trigger_T1[4],trigger_T2[4],event_ctd;
+    int32_t i,c,istart,iend,iadc,len[4],trigger_T1[4],trigger_T2[4],event_ctd, trigger_pattern;
     uint16_t *sb=(uint16_t *)buf;
     int ch_hold[4][5000];
-
+    trigger_pattern=sb[2];
     //printf("Event record: 0x%x 0x%x Trigger Mask 0x%04x\n",sb[0],sb[1],sb[2]);
     sb = (unsigned short *)&buf[EVENT_GPS];
     event_ctd=*(int *)&buf[EVENT_CTD];
@@ -208,7 +233,7 @@ void write_event(uint8_t *buf){
     srand(time(NULL));   // Initialization, should only be called once.
     int r = rand();      // Returns a pseudo-random integer between 0 and RAND_MAX.
     char str[100];
-    sprintf(str, "%d", r);
+    sprintf(str, "%d", event_count);
     
     char filename[80];
     strcpy(filename, "data/");
@@ -229,7 +254,15 @@ void write_event(uint8_t *buf){
     fprintf(fptr,"GPS: %02d-%02d-%d %02d:%02d:%02d ",buf[EVENT_GPS+3],buf[EVENT_GPS+2],*sb,
            buf[EVENT_GPS+4],buf[EVENT_GPS+5],buf[EVENT_GPS+6]);
     fprintf(fptr,"CTD: %d\n",event_ctd);
-    
+    fprintf(fptr,"Trigger Source Pattern: %d\n",trigger_pattern);
+    fprintf(fptr,"Trigger Condition: %d\n",trigg_cond);
+    fprintf(fptr,"List01: ");
+    for(i=EVENT_CTRL;i<EVENT_WINDOWS;i++) fprintf(fptr," 0x%02x",buf[i]);
+    fprintf(fptr,"\n");
+    fprintf(fptr,"List02: ");
+    for(i=EVENT_WINDOWS;i<EVENT_ADC;i++) fprintf(fptr," 0x%02x",buf[i]);
+    fprintf(fptr,"\n");
+
 
     for(c=0; c<4; c++){
     fprintf(fptr,"Channel %d: ",c+1);
@@ -240,10 +273,6 @@ void write_event(uint8_t *buf){
 
     fclose(fptr);
  
-    
-    
-    
-    
     
     
     

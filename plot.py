@@ -10,7 +10,7 @@ parser = OptionParser()
 data_dir='data/'
 
 
-max_plot=10
+max_plot=100
 
 
 parser.add_option('-r', '--runnr', type='string', default='002')
@@ -25,7 +25,7 @@ txtfiles = []
 for file in glob.glob(data_dir+'*.dat'):
     #num=int(file.split('/')[1].split('.')[0])
     #if num>start and num<stop:
-    if runnr in file and filecount<max_plot:
+    if runnr+'_' in file and filecount<max_plot:
         txtfiles.append(file)
         filecount=filecount+1
 
@@ -45,14 +45,23 @@ for i in np.arange(nData):
     ch2_T=[]
     ch3_T=[]
     ch4_T=[]
+    
+    trigg_pattern=0
 
 
 
     with open(filename) as fp:
         line = fp.readline()
+        print filename
         cnt = 1
         while line:
             line = fp.readline().strip()
+            
+            if 'Trigger Source Pattern:' in line:
+                hold= line.split(':')[1].split(' ')
+                hold = filter(None, hold) # fastest
+                hold=map(int, hold)
+                trigg_pattern=hold[0]
         
             if 'Ch 1 T1,T2:' in line:
                 hold= line.split(':')[1].split(' ')
@@ -83,17 +92,24 @@ for i in np.arange(nData):
             if 'Channel 2:' in line:
                 hold= line.split(':')[1].split(' ')
                 hold = filter(None, hold) # fastest
-                ch3=map(int, hold)
+                ch2=map(int, hold)
 
             if 'Channel 3:' in line:
                 hold= line.split(':')[1].split(' ')
                 hold = filter(None, hold) # fastest
-                ch2=map(int, hold)
+                ch3=map(int, hold)
 
             if 'Channel 4:' in line:
                 hold= line.split(':')[1].split(' ')
                 hold = filter(None, hold) # fastest
                 ch4=map(int, hold)
+
+
+
+    trig1=trigg_pattern>>8&0001
+    trig2=trigg_pattern>>9&0001
+    trig3=trigg_pattern>>10&0001
+    trig4=trigg_pattern>>11&0001
 
 
     Pmax_ind=np.argmin(ch1)
@@ -145,13 +161,25 @@ for i in np.arange(nData):
 
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
+    ax1.title.set_text('trigger: {:01b} {:01b} {:01b} {:01b}'.format(trig1,trig2,trig3,trig4))
 
     #ax1.axhline(y=ch1_T[0], color='red', linestyle=':',label='T1')
     #ax1.axhline(y=ch1_T[1], color='orange', linestyle='-.',label='T2')
-    ax1.axhline(y=0, color='grey')
+    preT=500
+    coinT=100
+    postT=500
+    ax1.axvline(x=preT, color='black', linestyle=':')
+    ax1.axvline(x=preT+coinT, color='black', linestyle=':')
 
-    #ax1.axhline(y=-1*ch4_T[0], color='red', linestyle=':',label='T1')
-    #ax1.axhline(y=-1*ch4_T[1], color='orange', linestyle='-.',label='T2')
+    ax1.axvline(x=preT+coinT+postT, color='black', linestyle=':')
+
+
+
+    ax1.axhline(y=0, color='grey')
+    ax1.axhline(y=1*ch1_T[0], color='red', linestyle=':',label='T1')
+
+    ax1.axhline(y=-1*ch1_T[0], color='red', linestyle=':',label='T1')
+    ax1.axhline(y=-1*ch1_T[1], color='orange', linestyle='-.',label='T2')
     #ax1.axvline(x=time[Pmax_ind], color='blue', linestyle=':',)
     #ax1.axvline(x=time[Pmax_ind]-Tpr, color='blue', linestyle=':',label='Tpr')
     #ax1.axvline(x=time[Pmax_ind]+Tper, color='blue', linestyle='-.',label='Tper')
@@ -172,7 +200,7 @@ for i in np.arange(nData):
     #ax1.set_xlim([time[0],time[nData-1]])
 #ax1.set_xlim([1600,2500])
 
-    ax1.set_ylim([-4000,1000])
+    ax1.set_ylim([-200,100])
 
     ax1.legend(numpoints=1,loc='upper right')
     plt.show()

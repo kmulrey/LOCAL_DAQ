@@ -14,9 +14,12 @@
 #include "extra.h"
 //#include "socket_functions.h"
 
+extern int trigg_cond;
+
+
 void DEVICE:: Read_Message_File(char* filename,int col)
 {
-    printf("reading input\n");
+    //printf("reading input\n");
     FILE *fp=fopen(filename,"r") ;
 
 
@@ -81,7 +84,7 @@ void DEVICE:: Read_Message_File(char* filename,int col)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.CHANNEL_HV[col-1]=VALUE ;
-            printf("CHANNEL_HV=%d\n",messages.CHANNEL_HV[col-1]) ;
+            //printf("CHANNEL_HV=%d\n",messages.CHANNEL_HV[col-1]) ;
         }
         
         
@@ -91,6 +94,7 @@ void DEVICE:: Read_Message_File(char* filename,int col)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.TRIGG_CONDITION[col-1]=VALUE ;
+            trigg_cond=VALUE;
             //printf("TRIGG_CONDITION=%d\n",messages.TRIGG_CONDITION[col-1]) ;
         }
         
@@ -122,7 +126,7 @@ void DEVICE:: Read_Message_File(char* filename,int col)
             std::istringstream V(value) ;
             V>>VALUE ;
             messages.OFFSET_CORRECTION[col-1]=VALUE ;
-            printf("OFFSET=%d\n",messages.OFFSET_CORRECTION[col-1]) ;
+            //printf("OFFSET=%d\n",messages.OFFSET_CORRECTION[col-1]) ;
 
         }
 
@@ -223,7 +227,7 @@ unsigned short ctrllist[9]={0x0199,0x0012,0x0003,0x0010,0x000f,0x0320,0x0000,0x0
 
 void DEVICE:: Read_Parameter_Mode_File(char* filename)
 {
-    printf("reading input\n");
+    //printf("reading input\n");
     FILE *fp=fopen(filename,"r") ;
     
 

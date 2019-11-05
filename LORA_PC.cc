@@ -26,10 +26,13 @@
 #define    PORT1    8002
 #define    PORT2    8003
 
+int trigg_cond;
 
 char runnr[80];
+int event_count=0;
 //g++ -o LORA LORA_PC.cc
 
+DEVICE *unit = new DEVICE();
 
 int main(int argc, char **argv)
 {
@@ -51,7 +54,6 @@ int main(int argc, char **argv)
     
 
     
-    DEVICE *unit = new DEVICE();
     char filename[]="input.txt";
     char mode_filename[]="mode_parameters.txt";
 

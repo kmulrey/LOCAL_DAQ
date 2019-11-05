@@ -14,11 +14,11 @@ DAQ_ENABLE 1
 // unused/unused/unused/unused/enable ch4 trigger/enable ch3 trigger/enable ch2 trigger/enable ch1 trigger/enable ch1 and ch2 trigger/enable calibration trigger/enable 10 seconds trigger/enable external trigger/ unused/ enable not ch1 and ch2 trigger, enable red ch1 and ch2 trigger/ enable ch3 and ch4 trigger
 
 TRIGGER_ENABLE_1 1
-TRIGGER_ENABLE_2 0
-TRIGGER_ENABLE_3 0
+TRIGGER_ENABLE_2 1
+TRIGGER_ENABLE_3 1
 TRIGGER_ENABLE_4 1
 TRIGGER_ENABLE_CAL 0
-TRIGGER_ENABLE_TEN_SEC 0
+TRIGGER_ENABLE_TEN_SEC 1
 TRIGGER_ENABLE_EXT 0
 
 
@@ -37,5 +37,5 @@ TRIGGER_RATE_DIVIDER 0
 
 
 //Common Coincidene Readout Time: bits 15-0
-// 0-20480 ns: 0-4096 in steps of 5ns (default 500ns)
-READOUT_TIME 10000
+// 0-20480 ns:(default 500ns)
+READOUT_TIME 10

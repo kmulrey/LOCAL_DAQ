@@ -7,6 +7,7 @@
 //#define MAX 32840
 #define SA struct sockaddr
 
+extern int event_count;
 
 void make_socket(socket_connection* sock){
     // socket create and verification
@@ -205,20 +206,23 @@ int func_listen(int sockfd1){
     
     int i;
     read(sockfd1, buff, sizeof(buff)-1);
+    
+
 
     //if(buff[0]!=0){
 
-        printf("message from client!  %x   %x  %lu\n",buff[0],buff[1],sizeof(buff));
-        type=buff[0];
-        if(type==0xc0){//c0
-            printf("  --->event!\n");
-            handle_event(buff,sizeof(buff));
-        }
+    //printf("message from client!  %x   %x  %lu\n",buff[0],buff[1],sizeof(buff));
+    type=buff[0];
+    if(type==0xc0){//c0
+        event_count++;
+        printf("  --->event  %d!\n",event_count);
+        handle_event(buff,sizeof(buff));
+    }
         
 
-        if(type==0xc4){//c4
-            printf("PPS\n");
-        }
+    if(type==0xc4){//c4
+        printf("PPS\n");
+    }
  
     
         
