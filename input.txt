@@ -8,23 +8,23 @@ PORT_NO_WRITE 8003    8003    8003    8003    8005    8005    8005    8005    80
 KEYWORD5    xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx xxx yyy
 //------------------------------------------------ control settings--------------------------------------------------------------------------------------------------------------------------------------------------------
 CHANNEL_HV   1387   1494    1611    1525    1081    1558    1290    1310    1431    1544    1387   1494    1611    1525    1081    1558    1290    1310    1431    1544    PMT high voltage in Volts
-TRIGG_CONDITION 2   2   2   2   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   Atleast 1 out of 4 channels low
+TRIGG_CONDITION 1   1   1   1   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   Atleast 1 out of 4 channels low
 PRE_COIN_TIME   500    500    500    500    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    2000    Pre-coincidence time in nsecs.
-POST_COIN_TIME  500    500    500    500    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    Post-coincidence time in nsecs.
+POST_COIN_TIME  240   240    240    240    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    7600    Post-coincidence time in nsecs.
 GAIN_CORRECTION 16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297   16297  gain correction
-OFFSET_CORRECTION   127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 offset correction
-INTEGRATION_TIME    10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  integration time for baseline (i^2)*10
+OFFSET_CORRECTION   10 10 10 10 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 127 offset correction
+INTEGRATION_TIME    127 127 127 127 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  integration time for baseline (i^2)*10
 BASE_MAX    10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240   10240  base max
 BASE_MIN    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144    6144 base min
-SIG_T1  35   35   35   35   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T10
-SIG_T2  35   35    35   35   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T2
-TPREV  1   1   1   1   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    prev. time nx5ns
-TPER  10  10   10   10   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     period time nx25ns
+SIG_T1  20   20   20   20   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T10
+SIG_T2  10   10   10   10   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   T2
+TPREV  10   10   10   10   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    prev. time nx5ns
+TPER  1  1   1   1   2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     period time nx25ns
 TCMAX  255   255   255   255   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    time between threshold crossings nx5ns
 NCMAX  255   255   255   255   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    max # of threshold crossings
 NCMIN  255   255  255  255    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0    min bumber of threshold crossings
 QMAX  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     max charge
-QMIN 255   255   255   255   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     min charge
+QMIN 0   0   0   0  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0     min charge
 
 
 

@@ -217,11 +217,14 @@ int func_listen(int sockfd1){
         event_count++;
         printf("  --->event  %d!\n",event_count);
         handle_event(buff,sizeof(buff));
+        
     }
         
 
     if(type==0xc4){//c4
         printf("PPS\n");
+        handle_pps(buff,sizeof(buff));
+
     }
  
     

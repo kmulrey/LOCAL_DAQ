@@ -3,7 +3,7 @@
 //#include "add.h"
 //#include <iostream>
 #include <sys/wait.h>
-//#include <sys/time.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/select.h>
@@ -20,7 +20,7 @@
 #include <bitset>
 
 extern char runnr[80];
-
+uint8_t buf_PPS_hold[MAX];
 extern int event_count;
 extern int trigg_cond;
 
@@ -192,10 +192,73 @@ void handle_event(uint8_t *buf1, int l){
     for(c=0; c<4; c++){
         printf("baseline, min %d: %f  %d\n",c+1,baselines[c],min_values[c]);
     }
-     
+    
+    
+    int count66=0;
+    int id_66_1=0;
+    int id_66_2=0;
+    int id_66_3=0;
+    int end_found=0;
+
+    int l1=0;
+    
+    for(l1=0; l1<MAX;l1++){
+        printf("%x   ",buf1[l1]);
+        if(buf1[l1]==0x66){
+            count66++;
+            if(count66==0){id_66_1=l1;}
+            if(count66==1){id_66_2=l1;}
+            if(count66==2){id_66_3=l1;}
+
+        }
+        if(count66>=2){end_found=1;break;}
+
+    }
+    
+    
+    if(end_found==1){
+        write_event_hex(buf1);
+        write_pps_hex(buf_PPS_hold);
+    }
+    
+    printf("found the end 0x6666?  %d,   %d %d %d\n",end_found,id_66_1,id_66_2,id_66_3);
+
     printf("__________________________________________\n");
 
 }
+
+
+void handle_pps(uint8_t *buf1, int l){
+    
+    printf("__________________________________________\n");
+
+    int32_t rread,nread,ntry,i;
+    struct tm tt;
+    struct timeval tp;
+    float *fp;
+    unsigned short ppsrate;
+    int32_t prevgps;
+    uint8_t buf[MAX];
+    
+    nread = 2;                                    // again, already 2 bytes read!
+    ntry = 0;
+    buf[0] = MSG_START;
+    buf[1] = ID_PARAM_PPS;
+    gettimeofday(&tp,NULL);
+    int count66=0;
+    printf("PPS length: %d\n",l);
+    int l1=0;
+    
+    for(l1=0; l1<MAX;l1++){
+        buf_PPS_hold[l1]=buf1[l1];
+        printf("%x   ",buf1[l1]);
+        if(buf1[l1]==0x66){count66++;}
+        if(count66==2){break;}
+    }
+     
+
+}
+
 
 
 // write event to file
@@ -279,3 +342,66 @@ void write_event(uint8_t *buf){
     
 }
 
+
+void write_event_hex(uint8_t *buf){
+    
+  
+    char str[100];
+    sprintf(str, "%d", event_count);
+    char filename[80];
+    strcpy(filename, "data_hex/event_");
+    strcat(filename, runnr);
+    strcat(filename, "_");
+    
+    strcat(filename,str);
+    strcat(filename, ".dat");
+    
+    FILE *fptr;
+    fptr=fopen(filename,"w");
+    int i=0;
+
+    fprintf(fptr,"99 ");
+    
+    for(i=0; i<1799; i++){
+        fprintf(fptr,"%02x ",buf[i]);
+    }
+    
+    
+    
+    
+    fclose(fptr);
+
+    
+    
+}
+
+
+
+void write_pps_hex(uint8_t *buf){
+  
+    char str[100];
+    sprintf(str, "%d", event_count);
+    
+    char filename[80];
+    strcpy(filename, "data_hex/pps_");
+    strcat(filename, runnr);
+    strcat(filename, "_");
+    
+    strcat(filename,str);
+    strcat(filename, ".dat");
+    
+    FILE *fptr;
+    fptr=fopen(filename,"w");
+    int i=0;
+    fprintf(fptr,"99 ");
+
+    for(i=0; i<PPS_LENGTH-1; i++){
+        fprintf(fptr,"%02x ",buf[i]);
+    }
+    
+    
+    
+    
+    fclose(fptr);
+    
+}

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		4192C110239AC0A000A586F7 /* plot_mpv.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = plot_mpv.py; sourceTree = "<group>"; };
 		41937DED2360BC2100867792 /* mode_parameters.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = mode_parameters.txt; sourceTree = "<group>"; };
 		41937DF62364B15A00867792 /* io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = io.h; sourceTree = "<group>"; };
 		41937DF72364B15A00867792 /* io.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = io.cc; sourceTree = "<group>"; };
@@ -39,6 +40,7 @@
 				41ACAD4123350E2B00B8AA3B /* socket_functions.h */,
 				41ACAD4323350FC400B8AA3B /* socket_functions.cc */,
 				41ACAD4023350E2600B8AA3B /* input.txt */,
+				4192C110239AC0A000A586F7 /* plot_mpv.py */,
 			);
 			sourceTree = "<group>";
 		};

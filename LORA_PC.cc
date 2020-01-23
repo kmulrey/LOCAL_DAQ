@@ -23,8 +23,8 @@
 #include "io.h"
 #include "socket_functions.h"
 
-#define    PORT1    8002
-#define    PORT2    8003
+#define    PORT1    8082
+#define    PORT2    8083
 
 int trigg_cond;
 

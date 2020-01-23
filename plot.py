@@ -7,7 +7,7 @@ import glob
 plt.ion()
 parser = OptionParser()
 
-data_dir='data/'
+data_dir='field_data/'
 
 
 max_plot=100
@@ -161,25 +161,25 @@ for i in np.arange(nData):
 
     fig = plt.figure()
     ax1 = fig.add_subplot(1,1,1)
-    ax1.title.set_text('trigger: {:01b} {:01b} {:01b} {:01b}'.format(trig1,trig2,trig3,trig4))
+    #ax1.title.set_text('trigger: {:01b} {:01b} {:01b} {:01b}'.format(trig1,trig2,trig3,trig4))
 
     #ax1.axhline(y=ch1_T[0], color='red', linestyle=':',label='T1')
     #ax1.axhline(y=ch1_T[1], color='orange', linestyle='-.',label='T2')
     preT=500
     coinT=100
     postT=500
-    ax1.axvline(x=preT, color='black', linestyle=':')
-    ax1.axvline(x=preT+coinT, color='black', linestyle=':')
+    #ax1.axvline(x=preT, color='black', linestyle=':')
+    #ax1.axvline(x=preT+coinT, color='black', linestyle=':')
 
-    ax1.axvline(x=preT+coinT+postT, color='black', linestyle=':')
+    #ax1.axvline(x=preT+coinT+postT, color='black', linestyle=':')
 
 
 
     ax1.axhline(y=0, color='grey')
-    ax1.axhline(y=1*ch1_T[0], color='red', linestyle=':',label='T1')
+    #ax1.axhline(y=1*ch1_T[0], color='red', linestyle=':',label='T1')
 
-    ax1.axhline(y=-1*ch1_T[0], color='red', linestyle=':',label='T1')
-    ax1.axhline(y=-1*ch1_T[1], color='orange', linestyle='-.',label='T2')
+    #ax1.axhline(y=-1*ch1_T[0], color='red', linestyle=':',label='T1')
+    #ax1.axhline(y=-1*ch1_T[1], color='orange', linestyle='-.',label='T2')
     #ax1.axvline(x=time[Pmax_ind], color='blue', linestyle=':',)
     #ax1.axvline(x=time[Pmax_ind]-Tpr, color='blue', linestyle=':',label='Tpr')
     #ax1.axvline(x=time[Pmax_ind]+Tper, color='blue', linestyle='-.',label='Tper')
@@ -190,18 +190,22 @@ for i in np.arange(nData):
     
     #for t in np.arange(len(t2_cross)):
     #    ax1.plot(time[t2_cross[t]],ch1[t2_cross[t]],'o',color='orange')
+    
+    ax1.plot(time,-1*np.asarray(ch1),label='ch1',color='red')
 
-    ax1.plot(time,ch1,label='ch1',color='red')
-
-    ax1.plot(time,ch2,label='ch2',color='orange')
-    ax1.plot(time,ch3,label='ch3',color='green')
-    ax1.plot(time,ch4,label='ch4',color='blue')
+    ax1.plot(time,-1*np.asarray(ch2),label='ch2',color='orange')
+    ax1.plot(time,-1*np.asarray(ch3),label='ch3',color='green')
+    ax1.plot(time,-1*np.asarray(ch4),label='ch4',color='blue')
 
     #ax1.set_xlim([time[0],time[nData-1]])
 #ax1.set_xlim([1600,2500])
 
-    ax1.set_ylim([-200,100])
+    ax1.set_ylim([-100,1500])
+    ax1.set_ylabel('ADC counts')
+    ax1.set_xlabel('time (ns)')
 
+    ax1.set_title('CS013 event')
+    fig.tight_layout()
     ax1.legend(numpoints=1,loc='upper right')
     plt.show()
     raw_input()

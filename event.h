@@ -82,7 +82,15 @@
 #define N_BASELINE       50
 
 #define MAX 32840
+#define MAXTRY 50
+#define ID_PARAM_PPS          0xC4
+#define ID_PARAM_EVENT        0xC0
+
 
 void read_fake_file(char*,uint8_t *);
 void handle_event(uint8_t *, int);
+void handle_pps(uint8_t *, int);
+
 void write_event(uint8_t *);
+void write_event_hex(uint8_t *);
+void write_pps_hex(uint8_t *);
